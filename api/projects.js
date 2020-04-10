@@ -13,6 +13,18 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", validateProjectID, (req, res) => res.json(req.project));
 
+router.get("/:id/actions", validateProjectID, (req, res) => {
+  Projects.getProjectActions(req.params.id)
+    .then((actions) => res.json(actions))
+    .catch((err) => {
+      console.error(err);
+      next({
+        code: 500,
+        msg: "There was a problem retrieving the project's actions",
+      });
+    });
+});
+
 module.exports = router;
 
 async function validateProjectID(req, res, next) {
