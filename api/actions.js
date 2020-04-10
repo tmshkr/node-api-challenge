@@ -16,10 +16,24 @@ router.get("/:id", validateActionID, (req, res) => res.json(req.action));
 
 router.post("/", validateProjectID, (req, res, next) => {
   const { project_id, description, notes } = req.body;
+  const action = { project_id, description, notes };
   if (!(project_id && description && notes))
     return next({ code: 400, msg: "Please provide all required data" });
-  Actions.insert({ project_id, description, notes })
+  Actions.insert(action)
     .then((action) => res.status(201).json(action))
+    .catch((err) => {
+      console.error(err);
+      next({ code: 500, msg: "There was a problem creating the action" });
+    });
+});
+
+router.put("/:id", validateActionID, validateProjectID, (req, res, next) => {
+  const { project_id, description, notes, completed } = req.body;
+  const changes = { project_id, description, notes, completed };
+  if (!(project_id && description && notes))
+    return next({ code: 400, msg: "Please provide all required data" });
+  Actions.update(req.params.id, changes)
+    .then((action) => res.json(action))
     .catch((err) => {
       console.error(err);
       next({ code: 500, msg: "There was a problem creating the action" });
