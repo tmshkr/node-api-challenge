@@ -40,6 +40,15 @@ router.put("/:id", validateActionID, validateProjectID, (req, res, next) => {
     });
 });
 
+router.delete("/:id", validateActionID, (req, res, next) => {
+  Actions.remove(req.params.id)
+    .then(() => res.status(204).send())
+    .catch((err) => {
+      console.error(err);
+      next({ code: 500, msg: "There was a problem deleting the action" });
+    });
+});
+
 module.exports = router;
 
 async function validateActionID(req, res, next) {
