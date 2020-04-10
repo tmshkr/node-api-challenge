@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 
-import Projects from "./components/Projects";
+import ProjectList from "./components/ProjectList";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -30,7 +30,7 @@ function App() {
             exact
             path="/projects"
             render={(props) => (
-              <Projects
+              <ProjectList
                 {...props}
                 projects={projects}
                 getProjects={getProjects}

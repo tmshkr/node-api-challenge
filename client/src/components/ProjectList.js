@@ -1,10 +1,10 @@
 import React from "react";
 import Project from "./Project";
 
-function Projects(props) {
+function ProjectList(props) {
   const { projects } = props;
   return (
-    <div className="projects">
+    <div className="project-list">
       {projects.map((p) => (
         <Project key={p.id} project={p} />
       ))}
@@ -12,4 +12,4 @@ function Projects(props) {
   );
 }
 
-export default Projects;
+export default ProjectList;
