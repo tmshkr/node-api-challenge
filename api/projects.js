@@ -37,6 +37,18 @@ router.post("/", (req, res, next) => {
     });
 });
 
+router.put("/:id", validateProjectID, (req, res, next) => {
+  const { name, description } = req.body;
+  if (!(name && description))
+    return next({ code: 400, msg: "Please provide a name and description" });
+  Projects.update(req.params.id, { name, description })
+    .then((project) => res.json(project))
+    .catch((err) => {
+      console.error(err);
+      next({ code: 500, msg: "There was a problem updating the project" });
+    });
+});
+
 module.exports = router;
 
 async function validateProjectID(req, res, next) {
