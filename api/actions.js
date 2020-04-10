@@ -11,4 +11,18 @@ router.get("/", (req, res, next) => {
     });
 });
 
+router.get("/:id", validateActionID, (req, res) => res.json(req.action));
+
 module.exports = router;
+
+async function validateActionID(req, res, next) {
+  try {
+    const action = await Actions.get(req.params.id);
+    if (!action) return next({ code: 404, msg: "Action not found" });
+    req.action = action;
+    next();
+  } catch (err) {
+    console.error(err);
+    next({ code: 500, msg: "There was a problem finding that action" });
+  }
+}
