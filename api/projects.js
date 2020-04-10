@@ -27,9 +27,10 @@ router.get("/:id/actions", validateProjectID, (req, res) => {
 
 router.post("/", (req, res, next) => {
   const { name, description } = req.body;
+  const project = { name, description };
   if (!(name && description))
     return next({ code: 400, msg: "Please provide a name and description" });
-  Projects.insert({ name, description })
+  Projects.insert(project)
     .then((project) => res.status(201).json(project))
     .catch((err) => {
       console.error(err);
@@ -39,9 +40,10 @@ router.post("/", (req, res, next) => {
 
 router.put("/:id", validateProjectID, (req, res, next) => {
   const { name, description } = req.body;
+  const changes = { name, description };
   if (!(name && description))
     return next({ code: 400, msg: "Please provide a name and description" });
-  Projects.update(req.params.id, { name, description })
+  Projects.update(req.params.id, changes)
     .then((project) => res.json(project))
     .catch((err) => {
       console.error(err);
