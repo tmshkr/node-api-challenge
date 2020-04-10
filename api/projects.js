@@ -49,6 +49,15 @@ router.put("/:id", validateProjectID, (req, res, next) => {
     });
 });
 
+router.delete("/:id", validateProjectID, (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then(() => res.status(204).send())
+    .catch((err) => {
+      console.error(err);
+      next({ code: 500, msg: "There was a problem deleting the project" });
+    });
+});
+
 module.exports = router;
 
 async function validateProjectID(req, res, next) {
