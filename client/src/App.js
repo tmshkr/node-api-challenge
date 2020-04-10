@@ -9,6 +9,7 @@ import {
 import "./App.scss";
 
 import ProjectList from "./components/ProjectList";
+import ActionList from "./components/ActionList";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -31,6 +32,17 @@ function App() {
             path="/projects"
             render={(props) => (
               <ProjectList
+                {...props}
+                projects={projects}
+                getProjects={getProjects}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/projects/:id"
+            render={(props) => (
+              <ActionList
                 {...props}
                 projects={projects}
                 getProjects={getProjects}
