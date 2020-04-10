@@ -4,8 +4,9 @@ import { Button, Table, Spinner } from "reactstrap";
 import "./ActionList.scss";
 
 function ActionList(props) {
-  const { history, match } = props;
+  const { history, match, projects } = props;
   const projectID = match.params.id;
+  const projectName = projects.find((p) => p.id == projectID)?.name;
 
   const [actions, setActions] = useState([]);
 
@@ -36,7 +37,7 @@ function ActionList(props) {
         <Button color="primary" onClick={() => history.push("/actions/add")}>
           Add Action
         </Button>
-        <h2>Actions</h2>
+        <h2>{projectName}</h2>
       </header>
       <Table>
         <thead>
